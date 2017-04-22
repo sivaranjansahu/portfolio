@@ -1,0 +1,79 @@
+/* iPads (portrait and landscape) ----------- */
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  /* Styles */
+ 
+  h1.namaste {
+    font-size: 72px;
+  }
+   h1.hero{
+     font-size: 160px;
+   }
+  h2.hero {
+    font-size: 60px;
+  }
+  h1.lighthero {
+    font-size: 80px;
+  }
+  .profile-pic:not(:nth-child(3)) {
+    display: none;
+  }
+  section.site-block {
+    margin-bottom: 90px;
+  }
+  .site-block {
+    padding:0 40px ;
+  }
+  .page-hero h4 {
+    font-size: 24px;
+  }
+  h2.light {
+    font-size: 36px;
+  }
+  h3.light {
+    font-size: 24px;
+  }
+  h3.blockheader{
+    font-size: 24px;
+    
+}
+
+.m-t-8{
+  margin-top:40px;
+}
+h3.blockheader::before { 
+    width:30px;
+    height:18px;
+
+}
+.skill-icons{
+   text-align: left;
+}
+.skill-icons img{
+  height: 30px;
+ 
+}
+.bigsquare.left{
+    
+    left:-700px;
+    top:-300px;
+        
+}
+.red-item__showcase img{
+  
+}
+.red-item__showcase img:first-child{
+    left:-30vw;
+    opacity: 1;
+    height: 200px;
+}
+.red-item__showcase img:nth-child(2){
+    z-index: 5;
+    height: 300px;
+}
+.red-item__showcase img:last-child{
+    right:-30vw;
+    opacity: 1;
+    height: 200px;
+}
+}
