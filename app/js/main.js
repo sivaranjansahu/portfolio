@@ -1,68 +1,93 @@
 $(document).ready(function () {
- 
+	var md = new MobileDetect(window.navigator.userAgent);
+	console.log(md);
 	// Init ScrollMagic
+
+
+
 	var controller = new ScrollMagic.Controller();
+	console.log(md.tablet())
+	if (!md.phone() && !md.tablet()) {
+
+		new ScrollMagic.Scene({
+				triggerElement: '#keep-happy'
+			})
+			.setClassToggle('#bigsquare1', 'rotated-positive')
+			//.addIndicators()
+			.addTo(controller);
+
+		new ScrollMagic.Scene({
+				triggerElement: '#keep-happy',
+				duration: 900
+			})
+			.setClassToggle('#bigsquare2', 'rotated-negative')
+			//.addIndicators()
+			.addTo(controller);
+	} else {
+		$('#bigsquare1').addClass('rotated-positive');
+	}
 
 
-	new ScrollMagic.Scene({
-			triggerElement: '#keep-happy'
+
+	if ( !md.phone() && !md.tablet()) {
+
+		var profilePicTween = TweenMax.staggerFrom('#profile-pic-holder>div', 1, {
+			scale: 0,
+			opacity: 0,
+			ease: Elastic.easeOut.config(0.6, 0.3),
+			delay: 1,
+			onComplete: loadNav
+		}, 0.2);
+
+		function loadNav() {
+			TweenMax.to('.fixednav', 0.2, {
+				left: 0,
+				ease: Linear.easeOut
+			})
+		}
+		new ScrollMagic.Scene({
+				triggerElement: '.page-hero',
+				offset: '0px',
+
+			})
+			//.setClassToggle('#profile-pic-holder', 'show')
+			//.addIndicators()
+			.setTween(profilePicTween)
+			.addTo(controller);
+	} else {
+		$('#profile-pic-holder>div').css({
+			opacity: 1
 		})
-		.setClassToggle('#bigsquare1', 'rotated-positive')
-		//.addIndicators()
-		.addTo(controller);
+	}
 
-	new ScrollMagic.Scene({
-			triggerElement: '#keep-happy',
-			duration: 900
+
+	if (true || !md.phone() && !md.tablet()) {
+
+		new ScrollMagic.Scene({
+				triggerElement: '.page-hero'
+			})
+			.setClassToggle('.page-hero', 'show')
+
+			.addTo(controller);
+
+		var SkillsTween = TweenMax.staggerFrom('.skills>div', 0.5, {
+			opacity: 0,
+			bottom: "-30px",
+			ease: Linear.easeOut
+		}, 0.1);
+		new ScrollMagic.Scene({
+				triggerElement: '#keep-happy'
+			})
+			.setTween(SkillsTween)
+			.addTo(controller);
+	} else {
+		$('.page-hero').css({
+			opacity: 1
 		})
-		.setClassToggle('#bigsquare2', 'rotated-negative')
-		//.addIndicators()
-		.addTo(controller);
+	}
 
 
-
-
-	var profilePicTween = TweenMax.staggerFrom('#profile-pic-holder>div', 1, {
-		scale: 0,
-		opacity:0,
-		ease: Elastic.easeOut.config(0.6, 0.3),
-		delay:1,
-		onComplete:loadNav
-	}, 0.2);
-
-function loadNav(){
-	TweenMax.to('.fixednav',0.2,{left:0,ease:Linear.easeOut})
-}
-	new ScrollMagic.Scene({
-			triggerElement: '.page-hero',
-			offset: '0px',
-
-		})
-		//.setClassToggle('#profile-pic-holder', 'show')
-		//.addIndicators()
-		.setTween(profilePicTween)
-		.addTo(controller);
-
-
-
-	var SkillsTween = TweenMax.staggerFrom('.skills>div', 0.5, {
-		opacity: 0,
-		bottom: "-30px",
-		ease: Linear.easeOut
-	}, 0.1);
-	new ScrollMagic.Scene({
-			triggerElement: '#keep-happy'
-		})
-		.setTween(SkillsTween)
-		.addTo(controller);
-
-
-	new ScrollMagic.Scene({
-			triggerElement: '.page-hero'
-		})
-		.setClassToggle('.page-hero', 'show')
-
-		.addTo(controller);
+//Fun animation on profile pic 
 
 	$('.profile-pic').mouseenter(function () {
 			$(this).addClass('rotating');
@@ -70,13 +95,18 @@ function loadNav(){
 		.mouseleave(function () {
 			$(this).removeClass('rotating');
 		})
-	//$('.profile-pic:nth-child(3)').delay(5000).removeClass('rotating')
+	
 	setTimeout(function () {
 		$('.profile-pic:nth-child(3)').removeClass('rotating')
 	}, 5000);
 
+
+
+
 	// Tweens
-	var pointersTween = TweenMax.staggerFrom('.pin', 1, {
+
+if (true || !md.phone() && !md.tablet()) {
+		var pointersTween = TweenMax.staggerFrom('.pin', 1, {
 		scale: 0,
 		delay: 1,
 		opacity: 1,
@@ -95,11 +125,18 @@ function loadNav(){
 		})
 		.setTween(wireframeTween)
 		.addTo(controller);
+}else{
+	$('.pin','.imagemap').css({
+			opacity: 1
+		})
+}
+
+
 
 	//Dev section animations
 
-
-	var devSkillsTween = TweenMax.staggerFrom('.dev-skills>div', 0.5, {
+if (true || !md.phone() && !md.tablet()){
+		var devSkillsTween = TweenMax.staggerFrom('.dev-skills>div', 0.5, {
 		opacity: 0,
 		bottom: "-30px",
 		ease: Linear.easeOut
@@ -122,9 +159,18 @@ function loadNav(){
 		})
 		.setTween(devIconsTween2)
 		.addTo(controller);
+}else{
+		$('.dev-skills>div','.skill-icons li').css({
+			opacity: 1
+		})
+}
+
+
 
 
 	//design section
+
+if (true || !md.phone() && !md.tablet()){
 	var designSkillsTween = TweenMax.staggerFrom('.design-skills>div', 0.5, {
 		opacity: 0,
 		bottom: "-30px",
@@ -135,8 +181,18 @@ function loadNav(){
 		})
 		.setTween(designSkillsTween)
 		.addTo(controller);
-
+}else{
+	$('.design-skills>div').css({
+			opacity: 1
+		})
+}
+	
+if (md.phone() || md.tablet()){
+	$('#slideContainer').wrapInner(document.createElement("div"));
+}
 	//Horizontal scroll
+
+if (!md.phone() && !md.tablet()){
 	var controller_h = new ScrollMagic.Controller({
 		vertical: false
 	});
@@ -168,9 +224,14 @@ function loadNav(){
 		})
 		.setTween(redBlockTween)
 		.addTo(controller);
+}else{
 
+}
+	
 
+//Showcase section - red
 
+if (!md.phone() && !md.tablet()){
 	var showcaseTween1 = TweenMax.from(".red-item__showcase.first img:first-child", 0.5, {
 		left: "0",
 		opacity: 0
@@ -193,6 +254,13 @@ function loadNav(){
 		})
 		.setTween(showcaseTween2)
 		.addTo(controller_h);
+}else{
+	$('.red-item__showcase.first img:first-child','.red-item__showcase.first img:last-child').css({
+			opacity: 1
+		})
+}
+
+	
 	//2nd slide
 
 
@@ -261,43 +329,45 @@ function loadNav(){
 
 
 
-//Render Skills bars
-var skillsBarsConainer = $('#skills-bars');
-var skillsData = [{
-		skill: 'AngularJS',
-		rating: 5
-	},
-	{
-		skill: 'JavaScript',
-		rating: 6
-	},
-	{
-		skill: 'Ionic Framework',
-		rating: 6
-	},
-	{
-		skill: 'HTML5',
-		rating: 7
-	},
-	{
-		skill: 'CSS3',
-		rating: 6
-	},
-	{
-		skill: 'D3JS',
-		rating: 4
-	},
-	{
-		skill: 'Firebase',
-		rating: 7
-	},
-]
+	//Render Skills bars
+	var skillsBarsConainer = $('#skills-bars');
+	var skillsData = [{
+			skill: 'AngularJS',
+			rating: 5
+		},
+		{
+			skill: 'JavaScript',
+			rating: 6
+		},
+		{
+			skill: 'Ionic Framework',
+			rating: 6
+		},
+		{
+			skill: 'HTML5',
+			rating: 7
+		},
+		{
+			skill: 'CSS3',
+			rating: 6
+		},
+		{
+			skill: 'D3JS',
+			rating: 4
+		},
+		{
+			skill: 'Firebase',
+			rating: 7
+		},
+	]
 
-var controller2 = new ScrollMagic.Controller();
-new ScrollMagic.Scene({triggerElement: '#resume-block'})
-    .on('start',skillBars)
-    .addTo(controller);
-	
+	var controller2 = new ScrollMagic.Controller();
+	new ScrollMagic.Scene({
+			triggerElement: '#resume-block'
+		})
+		.on('start', skillBars)
+		.addTo(controller);
+
 	skillsData.forEach(function (d, index) {
 		var ID = 'bar' + index.toString();
 		var progressWidth = (d.rating * 10).toString() + '%';
@@ -305,55 +375,56 @@ new ScrollMagic.Scene({triggerElement: '#resume-block'})
 		skillTitle.className = 'col-md-3';
 		skillTitle.innerHTML = '<h4>' + d.skill + '</h4> <div class="bar-container"><div class="pg" id=' + ID + ' ></div></div>';
 		skillsBarsConainer.append(skillTitle);
-		
-	})
-function skillBars() {
 
-	skillsData.forEach(function (d, index) {
-		var ID = 'bar' + index.toString();
-		var progressWidth = (d.rating * 10).toString() + '%';
-		var skillTitle = document.createElement('div');
-		skillTitle.className = 'col-md-3';
-		
-		TweenMax.to('#' + ID, 1, {
-			width: progressWidth,
-			transformOrigin: '0% 0%',
-			ease: Power3.easeOut
+	})
+
+	function skillBars() {
+
+		skillsData.forEach(function (d, index) {
+			var ID = 'bar' + index.toString();
+			var progressWidth = (d.rating * 10).toString() + '%';
+			var skillTitle = document.createElement('div');
+			skillTitle.className = 'col-md-3';
+
+			TweenMax.to('#' + ID, 1, {
+				width: progressWidth,
+				transformOrigin: '0% 0%',
+				ease: Power3.easeOut
+			})
 		})
-	})
-}
+	}
 
 
-controller.scrollTo(function(target,element) {
+	controller.scrollTo(function (target, element) {
 
-  TweenMax.to(window, 0.5, {
-    scrollTo : {
-      y : target -100, // scroll position of the target along y axis
-      autoKill : true, // allows user to kill scroll action smoothly
-	  offset:-140
-    },
-    ease : Linear.easeInOut
-  });
+		TweenMax.to(window, 0.5, {
+			scrollTo: {
+				y: target - 100, // scroll position of the target along y axis
+				autoKill: true, // allows user to kill scroll action smoothly
+				offset: -140
+			},
+			ease: Linear.easeInOut
+		});
 
-});
+	});
 
-//  Bind scroll to anchor links
-$(document).on("click", "a[href^=#]", function(e) {
-  var id = $(this).attr("href"); // grab the href attribute value
+	//  Bind scroll to anchor links
+	$(document).on("click", "a[href^=#]", function (e) {
+		var id = $(this).attr("href"); // grab the href attribute value
 
-  if($(id).length > 0) {
-    // prevents default behavior of links.
-    e.preventDefault();
+		if ($(id).length > 0) {
+			// prevents default behavior of links.
+			e.preventDefault();
 
-    // trigger scroll
-    controller.scrollTo(id,$(this));
-  }
-});
+			// trigger scroll
+			controller.scrollTo(id, $(this));
+		}
+	});
 
 
-$('[data-toggle=tooltip]').tooltip();
+	$('[data-toggle=tooltip]').tooltip();
 
 });
 // $(document).ready(function(){
-    
+
 // });

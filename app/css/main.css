@@ -16,6 +16,7 @@ body{
 p.large{
     font-size: 20px;
     font-family: 'Assistant', sans-serif;
+    margin-top:60px;
 }
 
 h1.hero{
@@ -554,3 +555,6 @@ text-align: center;
   border-right-color: #FFDC00;
   border-width: 5px 5px 5px 0;
 }
+  .imagemap{
+    overflow:hidden;
+  }
