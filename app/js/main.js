@@ -361,6 +361,20 @@ if (!md.phone() && !md.tablet()){
 		},
 	]
 
+	//Contact page animations
+
+		
+	var contactFaceTween = TweenMax.from('.face-holder', 1, {
+		bottom: '-600vw',opacity:0,
+		ease: Power1.easeOut
+	});
+	new ScrollMagic.Scene({
+			triggerElement: '#contact-block'
+		})
+		.setTween(contactFaceTween)
+		.addTo(controller);
+
+
 	var controller2 = new ScrollMagic.Controller();
 	new ScrollMagic.Scene({
 			triggerElement: '#resume-block'
@@ -368,6 +382,22 @@ if (!md.phone() && !md.tablet()){
 		.on('start', skillBars)
 		.addTo(controller);
 
+
+var socialIcons = TweenMax.staggerFrom('.social-icons li', 2, {
+		scale: 0,
+		opacity: 1,
+		ease: Elastic.easeOut.config(1, 0.6)
+	}, 0.1);
+	new ScrollMagic.Scene({
+			triggerElement: '#resume-block h1'
+		})
+		.setTween(socialIcons)
+		.addTo(controller);
+
+
+
+
+//Resume /skills graph
 	skillsData.forEach(function (d, index) {
 		var ID = 'bar' + index.toString();
 		var progressWidth = (d.rating * 10).toString() + '%';
@@ -395,13 +425,45 @@ if (!md.phone() && !md.tablet()){
 	}
 
 
+if (true || !md.phone() && !md.tablet()){
+	var circleBarTween = TweenMax.to('#circle-bar', 0.5, {
+		x: -200,
+         transformOrigin: "50% 50%",
+         ease: Power4.easeOut,
+		 onComplete: function () {
+           TweenLite.to('#circle-bar', 2, {
+             rotation: function () {
+               return 90 - 32.727272727272 * i - 16.35
+             },
+             transformOrigin: "50% 50%",
+             ease: Power4.easeOut,
+             opComplete:function(){
+               TweenLite.to(['#dsline'],1,{opacity:1,left:"50%"});
+			   TweenLite.to(['#ds'],1,{opacity:1,left:"57%"});
+               $('#ds h3').text('Firebase');
+              $('#ds p').text('I have used Firebase/AngularFire in both Web and Mobile projects to build build realtime functionalities. Have used GeoFire to build geolocation apps.');
+             }
+           })
+         }
+	});
+	new ScrollMagic.Scene({
+			triggerElement: '#resume-block h2'
+		})
+		.setTween(circleBarTween)
+		.addTo(controller);
+}else{
+	$('.design-skills>div').css({
+			opacity: 1
+		})
+}	
+
 	controller.scrollTo(function (target, element) {
 
 		TweenMax.to(window, 0.5, {
 			scrollTo: {
-				y: target - 100, // scroll position of the target along y axis
+				y: target, // scroll position of the target along y axis
 				autoKill: true, // allows user to kill scroll action smoothly
-				offset: -140
+				// offset: -40
 			},
 			ease: Linear.easeInOut
 		});
@@ -409,7 +471,7 @@ if (!md.phone() && !md.tablet()){
 	});
 
 	//  Bind scroll to anchor links
-	$(document).on("click", "a[href^=#]", function (e) {
+	$(document).on("click", "a[href^='#']", function (e) {
 		var id = $(this).attr("href"); // grab the href attribute value
 
 		if ($(id).length > 0) {
@@ -423,6 +485,9 @@ if (!md.phone() && !md.tablet()){
 
 
 	$('[data-toggle=tooltip]').tooltip();
+
+
+
 
 });
 // $(document).ready(function(){

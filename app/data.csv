@@ -1,0 +1,12 @@
+name,value,lastUsed,writeUp
+Javascript,50,1,"I have used Javascript in abc,def,high projects"
+AngularJS,75,2,"I have used AngularJS in abc,def,high projects"
+D3JS,30,Currently using,"I have used D3JS in abc,def,high projects"
+HTML5,70,Currently using,"I have used HTML5 in abc,def,high projects"
+CSS3,70,Currently using,"I have used CSS3 in abc,def,high projects"
+jQuery,60,Currently using,"I have used jQuery in abc,def,high projects"
+Bootstrap,70,1,"I have used Bootstrap in abc,def,high projects"
+Ionic Framework,60,1,"I have used Ionic in abc,def,high projects"
+Firebase,60,Currently using,"I have used Firebase/AngularFire in both Web and Mobile projects to build build realtime functionalities. Have used GeoFire to build geolocation apps."
+Gulp,50,Currently using,"I have used Gulp in abc,def,high projects"
+SASS,50,Currently using,"I have used SASS in abc,def,high projects"

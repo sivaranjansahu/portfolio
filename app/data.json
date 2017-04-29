@@ -1,0 +1,30 @@
+{
+    "id": "Raphael Varane", 
+    "data": [
+        {
+            "skill": "Interaction Design", 
+            "count": 80
+        }, 
+        {
+            "skill": "Data Visualization", 
+            "count": 60
+        }, 
+        {
+            "skill": "Creativity", 
+            "count": 80
+        }, 
+        {
+            "skill": "Visual Design", 
+            "count": 60
+        }, 
+        {
+            "skill": "User Research", 
+            "count": 50
+        }, 
+        {
+            "skill": "Design Thinking", 
+            "count": 60
+        }
+      
+    ]
+}
