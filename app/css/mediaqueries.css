@@ -231,4 +231,15 @@
   .red-item__subtitle{
     font-size: 18px;
   }
+  .skill-icons {
+    /*margin-top:130px;*/
+    display: block;
+    text-align: left;
+       position:relative;
+    
+}
+.skill-icon-holder{
+    position:relative;
+    height: auto;
+}
 }

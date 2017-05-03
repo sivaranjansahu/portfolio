@@ -5,7 +5,7 @@
  var formatNumber = d3.format("s");
 
  var color = d3.scale.ordinal()
-   .range(["rgba(254,95,85,0.45)", "rgba(254,95,85,0.5)", "rgba(254,95,85,0.55)", "rgba(254,95,85,0.6)", "rgba(254,95,85,0.65)", "rgba(254,95,85,0.7)"]);
+   .range(["rgba(18,176,229,0.45)", "rgba(18,176,229,0.5)", "rgba(18,176,229,0.55)", "rgba(18,176,229,0.6)", "rgba(18,176,229,0.65)", "rgba(18,176,229,0.7)"]);
 
  var svg = d3.select('body #circle-bar').append("svg")
 
@@ -48,10 +48,10 @@
      .scale(x).orient("left")
      .ticks(3)
      .tickFormat(formatNumber);
-    
-  // var infoRect=svg.append("g")
-  //   .append("text")
-  //   .text('yoyo')
+
+   // var infoRect=svg.append("g")
+   //   .append("text")
+   //   .text('yoyo')
 
    var circles = svg.selectAll("circle")
      .data(x.ticks(3))
@@ -59,7 +59,7 @@
      .attr("r", function (d) {
        return barScale(d);
      })
-     .style("fill", "rgba(254,95,85,0.1)")
+     .style("fill", "rgba(18,176,229,0.1)")
      // .style("stroke", "black")
      .style("stroke-dasharray", "2,2")
      .style("stroke-width", ".5px");
@@ -73,8 +73,7 @@
      })
      .innerRadius(0);
 
-
-
+ 
    var rot = 0;
    var segments = svg.selectAll("path")
      .data(data)
@@ -86,35 +85,36 @@
        return color(d.name);
      })
      .attr("d", arc)
+     .on('mouseover', function () {
+       d3.select(this).style("cursor", "pointer")
+     })
+     .on('mouseover',function(){
+       d3.select(this).style("fill", "rgba(18, 176, 229,1)")
+     })
+     .on('mouseleave',function(){
+       if(!d3.select(this).classed('segselected')){
+        d3.select(this).style("fill", "rgba(18, 176, 229,0.5)")
+       }
+       
+     })
      .on('click', function (d, i) {
-    console.log(d);
-    
-
+      
+       d3.select(this.parentNode).selectAll('path').style("fill", "rgba(18, 176, 229,0.5)");
+       d3.select(this).style("fill", "rgba(18, 176, 229,1)");
+       d3.select(this).classed("segselected", true);
        TweenLite.to('#circle-bar', 0.3, {
-         
-         onComplete: function () {
-           TweenLite.to('#circle-bar', 2, {
-             rotation: function () {
-               return 90 - 32.727272727272 * i - 16.35
-             },
-             transformOrigin: "50% 50%",
-             ease: Power4.easeOut,
-             opComplete:function(){
-               TweenLite.to(['#ds','#dsline'],1,{opacity:1});
-               $('#ds h3').text(d.name);
-              $('#ds p').text(d.writeUp);
-             }
-           })
-         }
+         onComplete: rotateCircleBarGraph(d, i)
        });
+       
 
        svg.append("div")
-        .text('asd')
+         .text('asd')
 
-       
+
        var that = this;
 
-     });
+     })
+     
 
    segments.transition().ease("elastic").duration(1000).delay(function (d, i) {
        return (25 - i) * 100;
@@ -127,6 +127,23 @@
        };
      });
 
+   function rotateCircleBarGraph(d, i) {
+
+     TweenLite.to('#circle-bar', 2, {
+       rotation: function () {
+         return 90 - 32.727272727272 * i - 16.35
+       },
+       transformOrigin: "50% 50%",
+       ease: Power4.easeOut,
+       onComplete: function () {
+         TweenLite.to(['#ds', '#dsline'], 1, {
+           opacity: 1
+         });
+         $('#ds h3').text(d.name);
+         $('#ds p').text(d.writeUp);
+       }
+     })
+   }
    svg.append("circle")
      .attr("r", barHeight)
      .classed("outer", true)
@@ -160,13 +177,13 @@
      .attr("d", "m0 " + -labelRadius + " a" + labelRadius + " " + labelRadius + " 0 1,1 -0.01 0");
 
    labels.selectAll("text")
-     .data(keys)
+     .data(data)
      .enter().append("text")
      .style("text-anchor", "middle")
      .style("font-weight", "600")
      .style("font-size", "12px")
      .style("font-family", "Assistant")
-
+     .attr("class", "names")
      .style("fill", function (d, i) {
        return "#444";
      })
@@ -176,8 +193,9 @@
        return i * 100 / numBars + 50 / numBars + '%';
      })
      .text(function (d) {
-       return d.toUpperCase();
-     });
+       return d.name.toUpperCase();
+     })
+     
 
  });
 
@@ -188,7 +206,7 @@
  var barHeight = height / 2 - 40;
 
  var colorSpider = d3.scale.ordinal()
-   .range(["rgba(254,95,85,0.1)", "rgba(254,95,85,0.4)", "rgba(254,95,85,0.3)", "rgba(254,95,85,0.2)", "rgba(254,95,85,0.1)"]);
+   .range(["rgba(18,176,229,0.1)", "rgba(18,176,229,0.4)", "rgba(18,176,229,0.3)", "rgba(18,176,229,0.2)", "rgba(18,176,229,0.1)"]);
 
  var tickValues = [20, 40, 60, 80, 100];
 
@@ -282,7 +300,19 @@
      .style("fill", "#444")
      .text(function (d) {
        return d.skill.toUpperCase();
-     });
+     })
+     .on('click', function (d) {
+
+       d3.select(this.parentNode.parentNode).selectAll('text').style("fill", "#444")
+       $('#spider-infobox h3').text(d.skill);
+       $('#spider-infobox p').text(d.count);
+
+       d3.select(this).style("fill", "rgba(18,176,229,1)")
+     })
+     .on('mouseover', function () {
+       d3.select(this).style("cursor", "pointer")
+     })
+
 
 
 
@@ -294,7 +324,7 @@
        return area(d.data);
      })
      .attr("fill", "none")
-     .attr("stroke", "#e32e2e")
+     .attr("stroke", "#08607d")
      .attr("stroke-width", "2px")
 
 
